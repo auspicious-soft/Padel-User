@@ -42,7 +42,7 @@ export default function HomePage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,38,66,0.2)_0%,rgba(55,105,166,0.2)_100%)]" />
-        <div className="relative z-10 mx-auto min-h-[520px] max-w-[1240px] px-4 pb-16 pt-5 sm:min-h-[600px] sm:px-6 lg:min-h-[640px] lg:px-8 lg:pb-24">
+        <div className="relative z-10 mx-auto min-h-[520px] max-w-[1240px] px-1 pb-16 pt-24 sm:min-h-[600px] sm:px-6 sm:pt-24 lg:min-h-[640px] lg:px-3 lg:pb-24 lg:pt-24">
           <RouteHeader activeItem="Home" inHero />
 
           {/* <h1 className="mt-8 text-center font-heading text-5xl font-extrabold leading-none tracking-tight text-[#bdd0e8] drop-shadow-[0_6px_16px_rgba(16,40,74,0.4)] sm:mt-10 sm:text-7xl lg:text-8xl">
@@ -115,7 +115,7 @@ export default function HomePage() {
         <div className="overflow-hidden rounded-[20px]">
           <Image
             src="/assets/Rectangle.png"
-            alt="Padel players"
+            alt="Padel  players"
             width={620}
             height={430}
             className="h-full w-full object-cover"

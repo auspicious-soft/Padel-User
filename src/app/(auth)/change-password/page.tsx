@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { resetPassword } from "@/services/admin-services";
 import { useRouter } from "next/navigation";
 import { useDataContext } from "@/app/components/DataContext";
-import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Search } from "lucide-react";
@@ -21,7 +20,7 @@ export default function Home() {
   const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { token } = useDataContext();
+  const { token, setToken } = useDataContext();
     const { data: session } = useSession();
 
       useEffect(() => {
@@ -59,15 +58,19 @@ export default function Home() {
       toast.error("Password must be at least 8 characters long");
       return;
     }
-    if (!token) {
+    const resolvedToken =
+      token || (typeof window !== "undefined" ? localStorage.getItem("auth.changePasswordToken") ?? "" : "");
+
+    if (!resolvedToken) {
       toast.error("Session Expired try again and update password");
       return;
     }
     setLoading(true);
     startTransition(async () => {
       try {
-        const response = await resetPassword({ password, token });
+        const response = await resetPassword({ password, token: resolvedToken });
         if (response?.status === 200) {
+          setToken("");
           toast.success("Password updated successfully");
           setIsModalOpen(true);
         } else {
@@ -87,7 +90,7 @@ export default function Home() {
 
   const handleCloseModalWithNavigation = () => {
     setIsModalOpen(false);
-    redirect("/");
+    router.push("/login");
   };
 
   return (

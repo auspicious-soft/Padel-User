@@ -21,7 +21,7 @@ export default function Home() {
 
       useEffect(() => {
         if (session) {
-          router.push("/authority/home");
+          router.push("/");
         }
       }, [session, router]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,11 +40,12 @@ export default function Home() {
       try {
         const response = await forgotPasswordService({ email: email });
         if (response?.status === 200 && response?.data?.success) {
-          const resetToken = response?.data?.data?.resetToken;
-          setOtpToken(resetToken ?? "");
+          const responseData = response?.data?.data ?? {};
+          const verificationToken = responseData?.verificationToken ?? responseData?.resetToken ?? "";
+          setOtpToken(verificationToken);
           setOtpPurpose("FORGOT_PASSWORD");
-          toast.success(response?.data?.message ?? "OTP sent successfully");
           router.push("/otp");
+          toast.success(response?.data?.message ?? "OTP sent successfully");
         } else {
           toast.error("User not Found");
         }

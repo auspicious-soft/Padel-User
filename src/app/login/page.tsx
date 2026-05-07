@@ -43,8 +43,13 @@ export default function LoginPage() {
           return;
         }
 
+        const accessToken = response?.data?.data?.accessToken;
+        if (accessToken && typeof window !== "undefined") {
+          localStorage.setItem("accessToken", accessToken);
+        }
+
         toast.success(response.data.message ?? "Login successful");
-        router.push("/location");
+        router.push("/");
         return;
       }
 

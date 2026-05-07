@@ -48,6 +48,11 @@ export default function SettingsModal({ isOpen, onClose }) {
     setLoading(true);
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("auth.dataEmail");
+      localStorage.removeItem("auth.changePasswordToken");
+      localStorage.removeItem("auth.otpToken");
+      localStorage.removeItem("auth.otpPurpose");
       await signOut({ callbackUrl: "/" }); // Let NextAuth handle the redirect
     } catch (error) {
       console.error("Logout failed", error);

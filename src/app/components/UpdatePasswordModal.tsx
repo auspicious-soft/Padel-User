@@ -1,5 +1,6 @@
 "use client";
 
+import { PasswrodConfirmationIcon } from "@/utils/svgicons";
 import Image from "next/image";
 import React, { useRef } from "react";
 
@@ -22,27 +23,43 @@ const UpdatePasswordModal: React.FC<Props> = ({ isOpen, onClose }) => {
   return (
     <div
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4"
     >
       <div
         ref={modalRef}
-        className="w-full max-w-[342px] rounded-[20px] bg-[#f4f4f4] px-8 py-10 text-center shadow-xl"
+        className="w-full max-w-[320px] rounded-[20px] bg-[#f5f5f5] px-5 py-6 text-center shadow-2xl sm:max-w-[360px] sm:px-7 sm:py-8"
       >
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#6f80ff]">
-          <Image src="/assets/updatePassword.png" alt="Password updated" width={22} height={22} />
+        {/* Icon */}
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl sm:h-12 sm:w-12">
+          {/* <Image
+            src="/assets/updatePassword.png"
+            alt="Password Updated"
+            width={20}
+            height={20}
+            className="object-contain"
+          /> */}
+          <PasswrodConfirmationIcon />
         </div>
 
-        <h3 className="mt-6 font-heading text-[48px] font-extrabold leading-[1.05] text-[#202530]">
-          Password Updated Successfully!
-        </h3>
-        <p className="mt-4 text-[18px] leading-7 text-[#666a73]">
-          Your password has been updated successfully. Please login to continue.
+        {/* Title */}
+        <h2 className="mt-4 font-heading text-[24px] font-semibold leading-[30px] text-[#2B2B2B] sm:text-[28px] sm:leading-[34px]">
+          Password Updated
+          <br />
+          Successfully!
+        </h2>
+
+        {/* Description */}
+        <p className="mt-3 text-[12px] leading-[18px] text-[#7B7B7B] sm:text-[13px] sm:leading-[20px]">
+          Your password has been updated
+          <br />
+          successfully. Please login to continue.
         </p>
 
+        {/* Button */}
         <button
           type="button"
           onClick={onClose}
-          className="mt-7 h-14 w-full rounded-full bg-[#7382ff] text-2xl font-medium text-white"
+          className="mt-6 h-[42px] w-full rounded-full bg-[#6E7BFF] text-[14px] font-medium text-white transition hover:opacity-90 sm:h-[46px] sm:text-[15px]"
         >
           Login
         </button>

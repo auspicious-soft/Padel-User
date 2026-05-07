@@ -17,18 +17,18 @@ export async function middleware(request: Request) {
   const session = await auth();
 
   // 🔹 If user is logged in and tries to access `/` (login page) → redirect away
-  if (pathname === "/" && session?.user) {
-    const role = session.user.role;
-    console.log('role: ', role);
-    if (role === "ADMIN") {
-      return NextResponse.redirect(new URL("/location", request.url));
-    } else {
-      return NextResponse.redirect(new URL("/authority/home", request.url));
-    }
-  }
-   if (pathname === "/authority") {
-    return NextResponse.redirect(new URL("/authority/home", request.url));
-  }
+  // if (pathname === "/" && session?.user) {
+  //   const role = session.user.role;
+  //   console.log('role: ', role);
+  //   if (role === "ADMIN") {
+  //     return NextResponse.redirect(new URL("/", request.url));
+  //   } else {
+  //     return NextResponse.redirect(new URL("/authority/home", request.url));
+  //   }
+  // }
+  //  if (pathname === "/authority") {
+  //   return NextResponse.redirect(new URL("/authority/home", request.url));
+  // }
 
   // 🔹 Protect all /admin routes
   // if (pathname.startsWith("/admin")) {

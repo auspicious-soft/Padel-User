@@ -8,9 +8,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials: any) => {
-        console.log('credentials: ', credentials);
         if (credentials.email) {
-          // Check for email instead of username
           return {
             id: credentials._id || "",
             email: credentials.email,
@@ -20,44 +18,40 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             language: credentials.language || "",
             role: credentials.role,
           };
-        } else {
-          const error = new Error("Invalid credentials");
-          error.name = "CredentialsSignin";
-          throw error;
         }
+
+        const error = new Error("Invalid credentials");
+        error.name = "CredentialsSignin";
+        throw error;
       },
     }),
   ],
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-       token.id = user.id || "";
-      token.email = user.email || "";
-      token.fullName = user.fullName || "";
-      token.image = user.image || "";
-      token.country = user.country || "";
-      token.role = user.role || "";
-      token.language = user.language || "";
+        token.id = user.id || "";
+        token.email = user.email || "";
+        token.fullName = user.fullName || "";
+        token.image = user.image || "";
+        token.country = user.country || "";
+        token.role = user.role || "";
+        token.language = user.language || "";
       }
       return token;
     },
     session({ session, token }) {
-      console.log('token: ', token);
-      console.log('session-----: ', session);
-      // if (session.user) {
-        session.user.id = token.id as string;
-        (session as any).user.fullName = token.fullName;
-        (session as any).user.email = token.email;
-        (session as any).user.image = token.image;
-        (session as any).user.role = token.role;
-        (session as any).user.country = token.country;
-        (session as any).user.language = token.language;
-      // }
+      session.user.id = token.id as string;
+      (session as any).user.fullName = token.fullName;
+      (session as any).user.email = token.email;
+      (session as any).user.image = token.image;
+      (session as any).user.role = token.role;
+      (session as any).user.country = token.country;
+      (session as any).user.language = token.language;
       return session;
     },
   },
   pages: {
-    signIn: "/",
+    signIn: "/login",
   },
   session: {
     strategy: "jwt",

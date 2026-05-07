@@ -3,27 +3,28 @@ import { getTokenCustom } from "@/actions";
 import { signOut } from "next-auth/react";
 
 export const axiosInstance = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
-    headers: {
-        'Content-Type': 'application/json',
-        // 'role' : 'admin'
-    }
-})
+  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-// ✅ Interceptor to catch 401 globally
+axiosInstance.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+  }
+  return config;
+});
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized -> logout
-      console.warn("Unauthorized: Logging out user...");
       try {
-        // If using next-auth
         await signOut({ callbackUrl: "/login" });
-
-        // If using custom logout
-        // localStorage.clear();
-        // router.push("/login");
       } catch (e) {
         console.error("Error during logout", e);
       }
@@ -33,13 +34,21 @@ axiosInstance.interceptors.response.use(
 );
 
 const attachInterceptor = (instance: any) => {
+  instance.interceptors.request.use((config: any) => {
+    if (typeof window !== "undefined") {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+    }
+    return config;
+  });
+
   instance.interceptors.response.use(
     (response: any) => response,
     async (error: any) => {
       if (error.response?.status === 401) {
-        console.warn("Unauthorized: Logging out user...");
-        await signOut({ callbackUrl: "/" }); 
-        // or custom logout
+        await signOut({ callbackUrl: "/login" });
       }
       return Promise.reject(error);
     }
@@ -65,53 +74,50 @@ const createAuthInstance = async () => {
 };
 
 const createAuthInstanceFormData = async () => {
-    try {
-        const token = await getTokenCustom();
-        const instance = axios.create({
-            baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                // 'role' : 'admin', 
-               "Content-Type": "multipart/form-data"
-            },
-        })
-          return attachInterceptor(instance);
-    } catch (error) {
-        console.error('Error getting token:', error);
-        throw error
-    }
+  try {
+    const token = await getTokenCustom();
+    const instance = axios.create({
+      baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return attachInterceptor(instance);
+  } catch (error) {
+    console.error("Error getting token:", error);
+    throw error;
+  }
 };
 
 const createPublisherInstance = async () => {
-    try {
-        const token = await getTokenCustom();
-        return axios.create({
-            baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                // 'role' : 'publisher', 
-                'Content-Type': 'application/json'
-            },
-        })
-    } catch (error) {
-        console.error('Error getting token:', error);
-        throw error
-    }
+  try {
+    const token = await getTokenCustom();
+    return axios.create({
+      baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Error getting token:", error);
+    throw error;
+  }
 };
 
 export const getAxiosInstance = async () => {
-    return await createAuthInstance()
-}
+  return await createAuthInstance();
+};
 
 export const getAxiosInstanceFormData = async () => {
-    return await createAuthInstanceFormData()
-}
-
+  return await createAuthInstanceFormData();
+};
 
 export const getAxiosInstanceForPublisher = async () => {
-    return await createPublisherInstance()
-}
+  return await createPublisherInstance();
+};
 
 export const getImageClientS3URL = (key: string) => {
-   return`${process.env.NEXT_PUBLIC_AWS_BUCKET_PATH}${key}`
-}
+  return `${process.env.NEXT_PUBLIC_AWS_BUCKET_PATH}${key}`;
+};

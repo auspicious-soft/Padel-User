@@ -15,13 +15,14 @@ export default function Home() {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [isPending, startTransition] = React.useTransition();
   const [otpValues, setOtpValues] = useState<string[]>(Array(6).fill(""));
-  const { dataEmail, setToken, otpToken, setOtpToken, otpPurpose } = useDataContext();
+  const [isHydrated, setIsHydrated] = useState(false);
+  const { setToken, otpToken, setOtpToken, otpPurpose, setOtpPurpose } = useDataContext();
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
-      router.push("/authority/home");
+      router.push("/");
     }
   }, [session, router]);
 
@@ -66,7 +67,7 @@ export default function Home() {
         const response = await sendOtpService({ otp, token: otpToken });
         if (response?.status === 200 && response?.data?.success) {
           const responseData = response?.data?.data ?? {};
-          const changePasswordToken = responseData?.changePasswordToken;
+          const changePasswordToken = responseData?.changePasswordToken || responseData?.verificationToken;
           const accessToken = responseData?.accessToken;
 
           if (changePasswordToken) {
@@ -77,12 +78,19 @@ export default function Home() {
           }
 
           if (accessToken) {
+            if (typeof window !== "undefined") {
+              localStorage.setItem("accessToken", accessToken);
+            }
             toast.success(response?.data?.message ?? "Login successful");
-            router.push("/location");
+            router.push("/");
+            setOtpToken("");
+            setOtpPurpose("");
             return;
           }
 
           toast.success(response?.data?.message ?? "OTP verified successfully");
+                      router.push("/change-password");
+
         } else {
           toast.error("Invalid OTP");
         }
@@ -119,9 +127,10 @@ export default function Home() {
     try {
       const response = await resendOtpService({ token: otpToken });
       if (response?.status === 200 && response?.data?.success) {
-        const resetToken = response?.data?.data?.resetToken;
-        if (resetToken) {
-          setOtpToken(resetToken);
+        const data = response?.data?.data ?? {};
+        const nextToken = data?.resetToken ?? data?.verificationToken ?? data?.token;
+        if (nextToken) {
+          setOtpToken(nextToken);
         }
         toast.success(response?.data?.message ?? "OTP resent successfully");
         return;
@@ -133,10 +142,18 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!otpToken) {
+    setIsHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    const storedOtpToken = typeof window !== "undefined" ? localStorage.getItem("auth.otpToken") ?? "" : "";
+    const resolvedOtpToken = otpToken || storedOtpToken;
+
+    if (!resolvedOtpToken) {
       router.push(otpPurpose === "VERIFY_EMAIL" ? "/login" : "/forgot-password");
     }
-  }, [otpToken, otpPurpose, router]);
+  }, [isHydrated, otpToken, otpPurpose, router]);
 
 
   useEffect(() => {

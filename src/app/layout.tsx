@@ -52,13 +52,13 @@ export default async function RootLayout({
       <body className={`font-kodchasan overflow-auto overflo-custom`}>
         <SessionProvider session={session}>
           {/* <CountryProvider> */}
-            <LocationProvider>
+            {/* <LocationProvider> */}
             <DataProvider>
               <Toaster position="top-center" />
               {/* <Toaster position="top-right" /> */}
               <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
             </DataProvider>
-            </LocationProvider>
+            {/* </LocationProvider> */}
           {/* </CountryProvider> */}
         </SessionProvider>
       </body>
