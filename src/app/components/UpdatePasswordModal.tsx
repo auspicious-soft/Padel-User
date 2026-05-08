@@ -31,13 +31,6 @@ const UpdatePasswordModal: React.FC<Props> = ({ isOpen, onClose }) => {
       >
         {/* Icon */}
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl sm:h-12 sm:w-12">
-          {/* <Image
-            src="/assets/updatePassword.png"
-            alt="Password Updated"
-            width={20}
-            height={20}
-            className="object-contain"
-          /> */}
           <PasswrodConfirmationIcon />
         </div>
 

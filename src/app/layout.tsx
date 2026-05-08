@@ -6,9 +6,19 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { DataProvider } from "./components/DataContext";
-import { CountryProvider } from "./components/CountryContext";
-import { LocationProvider } from "./context/LocationContext";
+import localFont from "next/font/local";
  
+
+const recoleta = localFont({
+  src: './fonts/Recoleta.otf',
+  variable:"--font-recoleta",
+  display: "swap",
+})
+const rasputin = localFont({
+  src: './fonts/Rasputin.otf',
+  variable:"--font-rasputin",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Disstrikt Admin",
@@ -49,7 +59,7 @@ export default async function RootLayout({
   // if(!session?.user) return redirect('/');
   return (
     <html lang="en">
-      <body className={`font-kodchasan overflow-auto overflo-custom`}>
+      <body className={`${recoleta.variable}  ${rasputin.variable} overflow-auto overflo-custom`}>
         <SessionProvider session={session}>
           {/* <CountryProvider> */}
             {/* <LocationProvider> */}
