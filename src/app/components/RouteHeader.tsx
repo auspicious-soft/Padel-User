@@ -56,7 +56,7 @@ export default function RouteHeader({
               {navItems.map((item) => (
                 <Link key={item.label} href={item.path}>
                   <button
-                    className={`rounded-full px-5 py-[10px]  text-base font-normal  transition-all ${
+                    className={`rounded-full px-5 py-[10px] cursor-pointer text-base font-normal  transition-all ${
                       activeItem === item.label
                         ? "bg-[#858fff] text-white"
                         : "text-[#4A5C7A] hover:bg-[#F5F7FF]"

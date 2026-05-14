@@ -3,6 +3,7 @@
 import Image from "next/image";
 import WebsiteFooter from "@/app/components/WebsiteFooter";
 import RouteHeader from "@/app/components/RouteHeader";
+import { PurpleRacketIcon, HomeNavButtonIcon, HomelistIcon } from "@/utils/svgicons";
 
 const howItWorks = [
   ["Slots are scheduled", "Game slots are created for specific times with a fixed number of spots."],
@@ -38,36 +39,36 @@ export default function HomePage() {
           alt="Project Play hero background"
           fill
           priority
-          className="object-cover object-[64%_28%]"
+          className="object-cover object-[50%_24%_28% 0%] sm:object-[50%_24%_28% 0%] md:object-[50%_24%_38% 0%] lg:object-[50%_24%_38% 0%]"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,38,66,0.2)_0%,rgba(55,105,166,0.2)_100%)]" />
-        <div className="relative z-10 mx-auto min-h-[520px] max-w-[1240px] px-1 pb-16 pt-24 sm:min-h-[600px] sm:px-6 sm:pt-24 lg:min-h-[640px] lg:px-3 lg:pb-24 lg:pt-24">
+        <div className="relative z-10 mx-auto min-h-[520px] max-w-[1240px] px-1 pb-16 pt-24 sm:min-h-[600px] sm:px-4 sm:pt-24 md:p-8 md:min-h-[600px] lg:min-h-[740px] lg:px-4 lg:pb-24 lg:pt-24">
           <RouteHeader activeItem="Home" inHero />
 
           {/* <h1 className="mt-8 text-center font-heading text-5xl font-extrabold leading-none tracking-tight text-[#bdd0e8] drop-shadow-[0_6px_16px_rgba(16,40,74,0.4)] sm:mt-10 sm:text-7xl lg:text-8xl">
             Project Play
           </h1> */}
 
-          <div className="relative top-35 mt-6 grid items-end gap-8 lg:mt-8 lg:grid-cols-[1fr_1.1fr]">
-            <div className="z-10">
-              <h2 className="max-w-[520px] text-4xl font-light leading-[1.15] sm:text-5xl lg:text-[52px]">
+          <div className="relative top-10 md:top-40 lg:top-35 mt-6 grid items-end gap-8 lg:mt-8 md:grid-cols-[1fr_1.1fr]">
+            <div className="relative top-10 md:top-0 z-10">
+              <h2 className="max-w-[520px] text-3xl  font-normal leading-[1.15] sm:text-3xl lg:text-5xl rasputin">
                 Start Your Playing Journey Today!
               </h2>
               <p className="mt-4 max-w-[500px] text-sm leading-7 text-[#e2ebfa]">
                 Choose a time slot, book as an individual, and pay per slot. No full-court booking required.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
-                <button className="rounded-full bg-[#7f8cf8] px-6 py-3 text-sm font-semibold text-white">
+                <button className="px-7 py-3.5 bg-Primary rounded-3xl outline outline-1 outline-offset-[-1px] outline-White  bg-[#7f8cf8] text-white text-base font-semibold font-Recoleta cursor-pointer">
                   Book A Slot
                 </button>
-                <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#7b82f7]">
+                <button className="cursor-pointer bg-white   text-[#848EFF] font-semibold font-['Recoleta'] text-base px-7 py-3.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#848EFF]">
                   Get Membership Pass
                 </button>
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative top-30 md:top-10">
               {/* <Image
                 src="/assets/ChatGPT.png"
                 alt="Padel player in action"
@@ -76,10 +77,10 @@ export default function HomePage() {
                 priority
                 className="mx-auto h-auto w-full"
               /> */}
-              <div className="mx-auto mt-2 max-w-[310px] text-center lg:absolute lg:bottom-10 lg:right-0 lg:mx-0 lg:text-left">
-                <h3 className="text-[38px] font-light leading-none">Play Beyond Limits</h3>
-                <p className="mt-3 text-sm leading-7 text-[#dce8f9]">
-                  Train, compete, and connect in a space built for movement and momentum.
+              <div className="hidden md:block mx-auto mt-15 max-w-[410px] text-center lg:absolute lg:bottom-10 lg:right-0 lg:mx-0 lg:text-left">
+                <h3 className="text-[38px] self-stretch text-right leading-none text-white text-3xl font-normal rasputin">Play Beyond Limits</h3>
+                <p className="mt-3 text-sm leading-7 self-stretch text-right text-[#dce8f9]">
+                  Train, compete, and connect in a space built for movement and momentum. A community that fuels ambition, celebrates effort, and brings people together through sport, energy, and shared purpose.
                 </p>
               </div>
             </div>
@@ -90,19 +91,19 @@ export default function HomePage() {
       <section className="mx-auto max-w-[1240px] px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-10">
           <div>
-            <h3 className="text-[40px] font-light text-[#7885ff]">A Simpler Way To Play</h3>
-            <p className="mt-4 max-w-[360px] text-sm leading-7 text-[#6d7891]">
-              Instead of booking an entire court, you join open time slots as an individual. Each slot has limited spots, clear pricing, and fills up as players join.
+            <div className="text-2xl font-normal text-[#7885ff] capitalize flex gap-2 Rasputin"><PurpleRacketIcon /> A Simpler Way To Play</div>
+            <p className="mt-4 max-w-[360px] text-sm justify-start text-[#7E7E8A]  font-normal Recoleta leading-7">
+              Instead of booking an entire court, you join open time slots as an individual.  Each slot has limited spots, clear pricing, and fills up as players join.
             </p>
-            <button className="mt-7 inline-flex items-center gap-2 text-[44px] font-light text-[#7885ff]">
-              How It Works <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#8792ff] text-base text-white">?</span>
+            <button className="mt-7 inline-flex justify-center gap-6 text-4xl items-center text-[#7885ff]  font-normal Rasputin capitalize">
+              How It Works <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#8792ff] text-base cursor-pointer text-white"><HomeNavButtonIcon /></span>
             </button>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {howItWorks.map(([title, description]) => (
-              <article key={title} className="rounded-2xl border border-[#e4e7f8] bg-white p-5">
-                <p className="mb-3 text-right text-[#98a6ff]">?</p>
+              <article key={title} className="w-full rounded-2xl border border-[#e4e7f8] bg-white p-5">
+                <p className="w-full mb-3 justify-end inline-flex text-[#98a6ff]"><HomelistIcon/></p>
                 <h4 className="text-base font-medium text-[#7885ff]">{title}</h4>
                 <p className="mt-3 text-sm leading-7 text-[#7d889f]">{description}</p>
               </article>

@@ -14,7 +14,7 @@ const ArrowButton: React.FC<ArrowButtonProps> = ({ text, onClick, type = 'button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`h-10 w-full rounded-full bg-[#7f87f6] text-sm font-medium text-white transition hover:bg-[#7079ef] disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+      className={`h-10 w-full cursor-pointer rounded-full bg-[#7f87f6] text-sm font-medium text-white transition hover:bg-[#7079ef] disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
     >
       {text}
     </button>

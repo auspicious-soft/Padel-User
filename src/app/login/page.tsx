@@ -117,7 +117,7 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <button type="submit" disabled={isLoading} className="h-10 w-full rounded-full bg-[#7f87f6] text-sm font-medium text-white transition hover:bg-[#7079ef] disabled:cursor-not-allowed disabled:opacity-60">
+            <button type="submit" disabled={isLoading} className="cursor-pointer h-10 w-full rounded-full bg-[#7f87f6] text-sm font-medium text-white transition hover:bg-[#7079ef] disabled:cursor-not-allowed disabled:opacity-60">
               {isLoading ? "Logging in..." : "Log In"}
             </button>
           </form>

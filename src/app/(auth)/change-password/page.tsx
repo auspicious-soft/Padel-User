@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import ArrowButton from "@/app/components/Button";
-import { Eye, EyeOff, Loader } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import InputField from "../../components/InputField";
 import UpdatePasswordModal from "@/app/components/UpdatePasswordModal";
@@ -12,6 +12,7 @@ import { useDataContext } from "@/app/components/DataContext";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Search } from "lucide-react";
+import FullPageLoader from "@/app/components/Loaders";
 
 export default function Home() {
   const [showPassword, setShowPassword] = useState(false);
@@ -95,11 +96,10 @@ export default function Home() {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-        // <>Loading...</>
+      {/* {loading ? (
+        <FullPageLoader />
       ) : (
-        <>
+        <> */}
           <main className="relative min-h-screen overflow-hidden">
             <Image src="/assets/AuthImage.png" alt="Auth background" fill priority className="object-cover" />
             <div className="absolute inset-0 bg-black/20" />
@@ -148,13 +148,13 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-5">
+                <div className="mt-5 cursor-pointer">
                   <ArrowButton text={isPending ? "Please wait..." : "Update Password"} type="submit" disabled={isPending} />
                 </div>
 
                 <p className="pt-3 text-center text-[11px] text-[#9a9aa3]">
                   Remember Password?{" "}
-                  <Link href="/" className="text-[#7079ef]">
+                  <Link href="/login" className="cursor-pointer text-[#7079ef]">
                     Login
                   </Link>
                 </p>
@@ -164,7 +164,7 @@ export default function Home() {
             <UpdatePasswordModal isOpen={isModalOpen} onClose={handleCloseModalWithNavigation} />
           </main>
         </>
-      )}
-    </>
+      // )}
+    // </>
   );
 }

@@ -10,6 +10,7 @@ import { useDataContext } from "@/app/components/DataContext";
 import { Search, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import FullPageLoader from "@/app/components/Loaders";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -59,10 +60,10 @@ export default function Home() {
   };
 
   return (
-    <>
-      {loading ? (
-        <>loading</>
-      ) : (
+    // <>
+    //   {loading ? (
+    //     <FullPageLoader />
+    //   ) : (
         <>
           <main className="relative min-h-screen overflow-hidden">
             <Image src="/assets/AuthImage.png" alt="Auth background" fill priority className="object-cover" />
@@ -99,7 +100,7 @@ export default function Home() {
 
                     <p className="pt-1 text-center text-[11px] text-[#9a9aa3]">
                       Remember Password?{" "}
-                      <Link href="/" className="text-[#7079ef]">
+                      <Link href="/login" className="cursor-pointer text-[#7079ef]">
                         Login
                       </Link>
                     </p>
@@ -109,7 +110,7 @@ export default function Home() {
             </section>
           </main>
         </>
-      )}
-    </>
+    //   )}
+    // </>
   );
 }

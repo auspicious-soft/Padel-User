@@ -52,7 +52,7 @@ const UpdatePasswordModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <button
           type="button"
           onClick={onClose}
-          className="mt-6 h-[42px] w-full rounded-full bg-[#6E7BFF] text-[14px] font-medium text-white transition hover:opacity-90 sm:h-[46px] sm:text-[15px]"
+          className="cursor-pointer mt-6 h-[42px] w-full rounded-full bg-[#6E7BFF] text-[14px] font-medium text-white transition hover:opacity-90 sm:h-[46px] sm:text-[15px]"
         >
           Login
         </button>
