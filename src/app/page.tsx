@@ -3,7 +3,7 @@
 import Image from "next/image";
 import WebsiteFooter from "@/app/components/WebsiteFooter";
 import RouteHeader from "@/app/components/RouteHeader";
-import { PurpleRacketIcon, HomeNavButtonIcon, HomelistIcon } from "@/utils/svgicons";
+import { PurpleRacketIcon, HomeNavButtonIcon, HomelistIcon, DropDownIcon } from "@/utils/svgicons";
 
 const howItWorks = [
   ["Slots are scheduled", "Game slots are created for specific times with a fixed number of spots."],
@@ -91,11 +91,11 @@ export default function HomePage() {
       <section className="mx-auto max-w-[1240px] px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-10">
           <div>
-            <div className="text-2xl font-normal text-[#7885ff] capitalize flex gap-2 Rasputin"><PurpleRacketIcon /> A Simpler Way To Play</div>
+            <div className="text-2xl font-normal text-[#7885ff] capitalize flex gap-2 rasputin"><PurpleRacketIcon /> A Simpler Way To Play</div>
             <p className="mt-4 max-w-[360px] text-sm justify-start text-[#7E7E8A]  font-normal Recoleta leading-7">
               Instead of booking an entire court, you join open time slots as an individual.  Each slot has limited spots, clear pricing, and fills up as players join.
             </p>
-            <button className="mt-7 inline-flex justify-center gap-6 text-4xl items-center text-[#7885ff]  font-normal Rasputin capitalize">
+            <button className="mt-7 inline-flex justify-center gap-6 text-4xl items-center text-[#7885ff]  font-normal rasputin capitalize">
               How It Works <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#8792ff] text-base cursor-pointer text-white"><HomeNavButtonIcon /></span>
             </button>
           </div>
@@ -104,8 +104,8 @@ export default function HomePage() {
             {howItWorks.map(([title, description]) => (
               <article key={title} className="w-full rounded-2xl border border-[#e4e7f8] bg-white p-5">
                 <p className="w-full mb-10 justify-end inline-flex text-[#98a6ff]"><HomelistIcon/></p>
-                <h4 className="text-base font-medium text-[#7885ff]">{title}</h4>
-                <p className="mt-3 text-sm leading-7 text-[#7d889f]">{description}</p>
+                <h4 className="text-base font-medium text-[#848EFF]">{title}</h4>
+                <p className="mt-[10px] text-sm leading-6  font-normal text-[#7E7E8A]">{description}</p>
               </article>
             ))}
           </div>
@@ -117,15 +117,15 @@ export default function HomePage() {
           <Image
             src="/assets/Rectangle.png"
             alt="Padel  players"
-            width={620}
-            height={430}
+            width={600}
+            height={400}
             className="h-full w-full object-cover"
           />
         </div>
 
         <div>
-          <h3 className="text-[48px] font-light text-[#7885ff]">Pricing & Membership Pass</h3>
-          <div className="mt-5 rounded-[20px] border border-[#8793ff] bg-white">
+          <h3 className="text-3xl font-normal rasputin capitalize text-[#848EFF] mt-4 md:text-4xl">Pricing & Membership Pass</h3>
+          <div className="mt-2 rounded-[20px] border border-[#8793ff] bg-white">
             <div className="grid grid-cols-3 border-b border-[#e9ecff] px-4 py-4 text-xs text-[#7a84a0] sm:px-7 sm:text-sm">
               <p>Feature</p>
               <p>Without Pass</p>
@@ -151,15 +151,15 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-[1240px] px-4 pb-16 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="text-[50px] font-light text-[#7885ff]">Frequently Asked Questions</h3>
-          <button className="w-fit rounded-full bg-[#7f8cf8] px-6 py-2 text-sm text-white">View All FAQs</button>
+          <h3 className="text-4xl font-normal text-[#848EFF]">Frequently Asked Questions</h3>
+          <button className="w-fit rounded-full bg-[#848EFF] px-7 py-3.5 text-white text-base">View All FAQs</button>
         </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {faqItems.map(([question, answer], index) => (
-            <details key={`${question}-${index}`} className="rounded-2xl bg-white px-5 py-4 text-[#66728d]">
-              <summary className="cursor-pointer list-none text-sm text-[#7381ff] sm:text-base">{question}</summary>
-              <p className="mt-2 text-sm leading-7">{answer}</p>
+            <details key={`${question}-${index}`} className="rounded-2xl bg-white px-5 py-5 text-[#66728d]">
+              <summary className="flex justify-between cursor-pointer list-none items-center text-base font-medium text-[#7381ff] sm:text-base">{question} <DropDownIcon/></summary>
+              <p className="mt-2 font-normal text-sm leading-6 text-[#7E7E8A]">{answer}</p>
             </details>
           ))}
         </div>
@@ -167,21 +167,21 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-[1240px] px-4 pb-16 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-[50px] font-light text-[#7885ff]">What People Say</h3>
-          <p className="hidden rounded-full bg-white px-3 py-1 text-sm text-[#7c87a0] md:block">+2,500 happy players</p>
+          <h3 className="text-[50px] text-[#7885ff] text-4xl font-normal rasputin">What People Say</h3>
+          <p className="pl-3 pr-3.5 py-2.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#D9D9D9] hidden  bg-white text-sm text-[#7E7E8A] font-normal md:block">+2,500 happy players</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
           {[1, 2, 3].map((item) => (
-            <article key={item} className="rounded-2xl bg-white px-6 py-7 text-center">
+            <article key={item} className="rounded-2xl bg-white px-6 py-7 text-center shadow-[0px_4px_20px_0px_rgba(92,138,255,0.10)]">
               <p className="text-sm leading-7 text-[#6f7b94]">
                 I usually skip games because getting a full group together is a hassle. Slot booking makes it easy to just show up and play.
               </p>
               <div className="mt-5 flex items-center justify-center gap-3">
-                <Image src="/assets/Logo.png" alt="Player avatar" width={38} height={38} className="rounded-full" />
+                <Image src="/assets/Rectangle.png" alt="Player avatar" width={38} height={38} className="rounded-full" />
                 <div className="text-left">
-                  <p className="text-sm text-[#7e89ff]">Beck Alves</p>
-                  <p className="text-xs text-[#90a0b6]">Sydney, Australia</p>
+                  <p className="text-sm font-medium text-[#848EFF]">Beck Alves</p>
+                  <p className="text-xs font-normal  text-[#7E7E8A]">Sydney, Australia</p>
                 </div>
               </div>
             </article>
@@ -190,17 +190,20 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center flex-col lg:flex-row">
         <h3 className="text-[50px] font-light text-[#7885ff]">Why Choose Us</h3>
-        <p className="mt-2 max-w-[700px] text-sm leading-7 text-[#707b94]">
-          Instead of booking full courts or spending time coordinating groups, you can join open time slots as an individual.
+        <p className="mt-2 max-w-[650px] text-sm leading-6 text-[#707b94]">
+          Instead of booking full courts or spending time coordinating groups, you join open time slots as an individual. Each slot has clear pricing, a fixed number of spots, and fills gradually as players join. The same simple system works across multiple games, making it easier to play more often without changing how you book.
         </p>
+
+        </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {whyChooseUs.map(([title, description]) => (
-            <article key={title} className="rounded-2xl bg-[#7f8cf8] p-6 text-white">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7f8cf8]">?</span>
-              <h4 className="mt-4 text-[30px] font-light leading-tight">{title}</h4>
-              <p className="mt-3 text-sm leading-7 text-[#e9ecff]">{description}</p>
+            <article key={title} className="rounded-2xl bg-[#858FFF] p-5 text-white">
+              <span className="mb-[34px] inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#7f8cf8]"><Image src="/assets/Book.png" alt="" width={30} height={40}/></span>
+              <h4 className=" text-xl font-light rasputin leading-8">{title}</h4>
+              <p className="mt-3 text-sm font-normal leading-6 text-[#FFFFFF]">{description}</p>
             </article>
           ))}
         </div>

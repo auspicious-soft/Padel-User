@@ -107,6 +107,10 @@ export const HomelistIcon = () => (
 <path d="M17.9999 18L17.6568 17.657" stroke="#858FFF" stroke-width="1.5" stroke-linecap="round"/>
 <path d="M6.34326 6.34375L6 6.00049" stroke="#858FFF" stroke-width="1.5" stroke-linecap="round"/>
 </svg>
-
-
 );
+export const DropDownIcon = () => (
+<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.0380733 0.30866C0.115467 0.12182 0.297787 0 0.500014 0H8.5C8.70227 0 8.88453 0.12182 8.96193 0.30866C9.03933 0.495493 8.9966 0.710553 8.8536 0.853553L4.8536 4.85353C4.65833 5.0488 4.34173 5.0488 4.14647 4.85353L0.14646 0.853553C0.00345996 0.710553 -0.0393134 0.495493 0.0380733 0.30866Z" fill="#858FFF"/>
+</svg>
+);
+
