@@ -94,7 +94,7 @@ export default function MerchandisePage() {
 
         <section className="mx-auto mt-4 w-full max-w-[1240px] pb-10">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-3xl font-medium">Merchandise</h1>
+            <h1 className="text-4xl font-normal text-[#1C2329]">Merchandise</h1>
             <div className="flex w-full gap-2 sm:w-auto">
               {selectedProduct && (
                 <button
@@ -118,7 +118,7 @@ export default function MerchandisePage() {
           </div>
 
           {selectedProduct ? (
-            <article className="mb-5 rounded-2xl bg-[#f6f8ff] p-3 shadow-sm md:p-4">
+            <article className="mb-5 rounded-2xl bg-[#f6f8ff] p-5 shadow-sm md:p-5">
               <div className="grid gap-3 md:grid-cols-[220px_1fr_auto] md:items-start">
                 <div className="overflow-hidden rounded-xl">
                   <Image src={selectedProduct.image} alt={selectedProduct.name} width={220} height={180} className="h-[180px] w-full object-cover" />
@@ -148,18 +148,18 @@ export default function MerchandisePage() {
           ) : null}
 
           <div>
-            <h2 className="mb-3 text-xl text-[#7a85f5]">{selectedProduct ? "More Products" : "All Products"}</h2>
+            {/* <h2 className="mb-3 text-xl text-[#7a85f5]">{selectedProduct ? "More Products" : "All Products"}</h2> */}
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {moreProducts.map((product) => (
-                <article key={product.id} className="rounded-xl bg-[#f7f9ff] p-2 shadow-sm">
+                <article key={product.id} className="rounded-xl bg-[#f7f9ff] p-[20px] shadow-sm">
                   <button type="button" onClick={() => setSelectedId(product.id)} className="block w-full text-left">
-                    <Image src={product.image} alt={product.name} width={320} height={190} className="h-[150px] w-full rounded-lg object-cover" />
-                    <h3 className="mt-2 text-sm font-semibold text-[#6f7ef7]">{product.name}</h3>
-                    <p className="mt-1 text-[11px] leading-5 text-[#7b85a7]">{product.description}</p>
+                    <Image src={product.image} alt={product.name} width={320} height={250} className="h-[250px] w-full rounded-lg object-cover" />
+                    <h3 className="mt-2 text-xl font-medium text-[#6f7ef7]">{product.name}</h3>
+                    <p className="mt-1 text-[12px] leading-5 text-[#7b85a7]">{product.description}</p>
                   </button>
                   <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm font-medium text-[#5a6485]">${product.price}</span>
-                    <Link href="#" className="rounded-full bg-[#7f8cf8] px-3 py-1 text-xs text-white">
+                    <span className="text-xl font-medium text-[#1C2329]">${product.price}</span>
+                    <Link href="#" className="rounded-full bg-[#848EFF] px-6 py-3 text-base font-semibold text-white">
                       Buy Now
                     </Link>
                   </div>

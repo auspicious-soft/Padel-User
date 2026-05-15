@@ -59,10 +59,10 @@ export default function HomePage() {
                 Choose a time slot, book as an individual, and pay per slot. No full-court booking required.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
-                <button className="px-7 py-3.5 bg-Primary rounded-3xl outline outline-1 outline-offset-[-1px] outline-White  bg-[#7f8cf8] text-white text-base font-semibold font-Recoleta cursor-pointer">
+                <button className="px-7 py-3.5 bg-Primary rounded-3xl outline outline-1 outline-offset-[-1px] outline-White  bg-[#7f8cf8] text-white text-base font-semibold  cursor-pointer">
                   Book A Slot
                 </button>
-                <button className="cursor-pointer bg-white   text-[#848EFF] font-semibold font-['Recoleta'] text-base px-7 py-3.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#848EFF]">
+                <button className="cursor-pointer bg-white   text-[#848EFF] font-semibold  text-base px-7 py-3.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#848EFF]">
                   Get Membership Pass
                 </button>
               </div>
@@ -92,7 +92,7 @@ export default function HomePage() {
         <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-10">
           <div>
             <div className="text-2xl font-normal text-[#7885ff] capitalize flex gap-2 rasputin"><PurpleRacketIcon /> A Simpler Way To Play</div>
-            <p className="mt-4 max-w-[360px] text-sm justify-start text-[#7E7E8A]  font-normal Recoleta leading-7">
+            <p className="mt-4 max-w-[360px] text-sm justify-start text-[#7E7E8A]  font-normal  leading-7">
               Instead of booking an entire court, you join open time slots as an individual.  Each slot has limited spots, clear pricing, and fills up as players join.
             </p>
             <button className="mt-7 inline-flex justify-center gap-6 text-4xl items-center text-[#7885ff]  font-normal rasputin capitalize">

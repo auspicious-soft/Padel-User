@@ -9,8 +9,13 @@ import { DataProvider } from "./components/DataContext";
 import localFont from "next/font/local";
  
 
+// const recoleta = localFont({
+//   src: './fonts/Recoleta.otf',
+//   variable:"--font-recoleta",
+//   display: "swap",
+// })
 const recoleta = localFont({
-  src: './fonts/Recoleta.otf',
+  src: './fonts/Recoleta-Regular.woff',
   variable:"--font-recoleta",
   display: "swap",
 })
