@@ -21,8 +21,8 @@ const rasputin = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "Disstrikt Admin",
-  description: "Disstrikt Admin ",
+  title: "Padel",
+  description: "Padel ",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
