@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import RouteHeader from "@/app/components/RouteHeader";
 import WebsiteFooter from "@/app/components/WebsiteFooter";
 
@@ -9,17 +10,20 @@ type TermsData = {
   paragraphs: string[];
 };
 
-export default function TermsByTypePage({ params }: { params: { type: string } }) {
+export default function TermsByTypePage() {
+  const params = useParams<{ type: string }>();
+  const type = Array.isArray(params?.type) ? params.type[0] : params?.type;
   const [content, setContent] = useState<TermsData | null>(null);
 
   useEffect(() => {
+    if (!type) return;
     const load = async () => {
-      const res = await fetch(`/api/mock/terms?type=${params.type}`, { cache: "no-store" });
+      const res = await fetch(`/api/mock/terms?type=${type}`, { cache: "no-store" });
       const json = await res.json();
       setContent(json?.data ?? null);
     };
     load();
-  }, [params.type]);
+  }, [type]);
 
   return (
     <main className="min-h-screen bg-[#dfe4f2] text-[#2e3550]">

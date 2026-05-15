@@ -51,7 +51,7 @@ export default function HomePage() {
           </h1> */}
 
           <div className="relative top-10 md:top-40 lg:top-35 mt-6 grid items-end gap-8 lg:mt-8 md:grid-cols-[1fr_1.1fr]">
-            <div className="relative top-10 md:top-0 z-10">
+            <div className="relative top-10 md:top-15 z-10">
               <h2 className="max-w-[520px] text-3xl  font-normal leading-[1.15] sm:text-3xl lg:text-5xl rasputin">
                 Start Your Playing Journey Today!
               </h2>
@@ -68,7 +68,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative top-30 md:top-10">
+            <div className="relative top-30">
               {/* <Image
                 src="/assets/ChatGPT.png"
                 alt="Padel player in action"
@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {howItWorks.map(([title, description]) => (
               <article key={title} className="w-full rounded-2xl border border-[#e4e7f8] bg-white p-5">
-                <p className="w-full mb-3 justify-end inline-flex text-[#98a6ff]"><HomelistIcon/></p>
+                <p className="w-full mb-10 justify-end inline-flex text-[#98a6ff]"><HomelistIcon/></p>
                 <h4 className="text-base font-medium text-[#7885ff]">{title}</h4>
                 <p className="mt-3 text-sm leading-7 text-[#7d889f]">{description}</p>
               </article>
