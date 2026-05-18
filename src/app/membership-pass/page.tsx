@@ -18,12 +18,12 @@ export default function MembershipPassPage() {
       <div className="px-3 pt-3">
         <RouteHeader activeItem="Membership Pass" />
 
-        <section className="mx-auto mt-4 w-full  pb-1">
-          <article className="relative overflow-hidden rounded-2xl">
-            <Image src="/assets/bgImg1.png" alt="Membership banner" width={1240} height={840} className="h-[380px] w-full object-cover sm:h-[380px]" />
+        <section className="mx-auto mt-4 w-full  ">
+          <article className="relative overflow-hidden rounded-2xl pb-10">
+            <Image src="/assets/bgImg1.png" alt="Membership banner" width={1240} height={840} className="h-[380px] w-full object-cover object-right md:object-right sm:h-[380px]" />
             {/* <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,24,40,0.72),rgba(10,24,40,0.18))]" /> */}
-            <div className="absolute inset-0 py-10 md:py-16 mx-10 md:mx-20 max-w-[400px]">
-              <h1 className=" md:max-w-[540px] text-2xl md:text-5xl font-normal rasputin text-white sm:text-4xl">Save more every time you play</h1>
+            <div className="absolute inset-0 py-16 md:py-14 mx-10 md:mx-20 max-w-[400px]">
+              <h1 className=" md:max-w-[780px] text-2xl md:text-5xl font-normal rasputin text-white sm:text-4xl">Save more every time you play</h1>
               <p className="mt-4.5 max-w-[560px] text-xs leading-7 text-[#dde6ff] sm:text-sm sm:leading-7">
                 The Membership Pass gives you discounted pricing on every slot you book. No changes to how you book — you just pay less.
               </p>
@@ -35,12 +35,12 @@ export default function MembershipPassPage() {
             {/* <div className="overflow-hidden rounded-2xl"> */}
             <Image
               src="/assets/Rectangle.png"
-              alt="Padel  players"
+              alt="Padel players"
               width={600}
               height={400}
               className="h-[200px] w-full  md:h-full rounded-2xl md:w-full  object-cover"
             />
-            {/* </div> */}
+            
 
             <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
 

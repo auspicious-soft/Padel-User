@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Eye, EyeOff, Search, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { userLoginService } from "@/services/admin-services";
 import { useDataContext } from "@/app/components/DataContext";
@@ -17,6 +17,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const { setDataEmail, setOtpToken, setOtpPurpose } = useDataContext();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      router.replace("/");
+    }
+  }, [router]);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,6 +54,11 @@ export default function LoginPage() {
         const accessToken = response?.data?.data?.accessToken;
         if (accessToken && typeof window !== "undefined") {
           localStorage.setItem("accessToken", accessToken);
+        }
+        const userDetails = response?.data.data;
+        const data = JSON.stringify(userDetails);
+        if(userDetails){
+          localStorage.setItem("userDetails", data);
         }
 
         toast.success(response.data.message ?? "Login successful");
