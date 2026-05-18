@@ -122,29 +122,31 @@ export default function HomePage() {
             className="h-full w-full object-cover"
           />
         </div>
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
 
-        <div>
-          <h3 className="text-3xl font-normal rasputin capitalize text-[#848EFF] mt-4 md:text-4xl">Pricing & Membership Pass</h3>
-          <div className="mt-2 rounded-[20px] border border-[#8793ff] bg-white">
-            <div className="grid grid-cols-3 border-b border-[#e9ecff] px-4 py-4 text-xs text-[#7a84a0] sm:px-7 sm:text-sm">
-              <p>Feature</p>
-              <p>Without Pass</p>
-              <p className="rounded-xl bg-[#7f8cf8] px-3 py-1 text-center text-white">Project Play Pass</p>
-            </div>
-
-            {[
-              ["Join open game slots", "Yes", "Yes"],
-              ["Book as an individual", "Yes", "Yes"],
-              ["Pay per slot", "Yes", "Yes"],
-              ["Discounted slot pricing", "No", "Yes"],
-              ["Better value for frequent players", "No", "Yes"],
-            ].map(([feature, withoutPass, withPass]) => (
-              <div key={feature} className="grid grid-cols-3 border-b border-[#eef0ff] px-4 py-3 text-xs text-[#36435c] last:border-b-0 sm:px-7 sm:text-sm">
-                <p className="font-semibold">{feature}</p>
-                <p>{withoutPass}</p>
-                <p>{withPass}</p>
+          <div>
+            <h3 className="text-4xl font-normal text-[#848EFF]  rasputin capitalize mt-4 ">Pricing & Membership Pass</h3>
+            <div className="mt-6 rounded-[20px] border border-[#8793ff] bg-white">
+              <div className="grid grid-cols-3 border-b border-[#e9ecff] px-4 py-4 text-xs text-[#7a84a0] sm:px-7 sm:text-sm">
+                <p>Feature</p>
+                <p>Without Pass</p>
+                <p className="rounded-xl bg-[#7f8cf8] px-3 py-1 text-center text-white">Project Play Pass</p>
               </div>
-            ))}
+
+              {[
+                ["Join open game slots", "Yes", "Yes"],
+                ["Book as an individual", "Yes", "Yes"],
+                ["Pay per slot", "Yes", "Yes"],
+                ["Discounted slot pricing", "No", "Yes"],
+                ["Better value for frequent players", "No", "Yes"],
+              ].map(([feature, withoutPass, withPass]) => (
+                <div key={feature} className="grid grid-cols-3 border-b border-[#eef0ff] px-4 py-3 text-xs text-[#36435c] last:border-b-0 sm:px-7 sm:text-sm">
+                  <p className="font-semibold">{feature}</p>
+                  <p>{withoutPass}</p>
+                  <p>{withPass}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -167,7 +169,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-[1240px] px-4 pb-16 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-[50px] text-[#7885ff] text-4xl font-normal rasputin">What People Say</h3>
+          <h3 className="text-4xl font-normal text-[#848EFF] rasputin">What People Say</h3>
           <p className="pl-3 pr-3.5 py-2.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#D9D9D9] hidden  bg-white text-sm text-[#7E7E8A] font-normal md:block">+2,500 happy players</p>
         </div>
 
@@ -191,7 +193,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center flex-col lg:flex-row">
-        <h3 className="text-[50px] font-light text-[#7885ff]">Why Choose Us</h3>
+        <h3 className="text-4xl font-normal text-[#848EFF] rasputin">Why Choose Us</h3>
         <p className="mt-2 max-w-[650px] text-sm leading-6 text-[#707b94]">
           Instead of booking full courts or spending time coordinating groups, you join open time slots as an individual. Each slot has clear pricing, a fixed number of spots, and fills gradually as players join. The same simple system works across multiple games, making it easier to play more often without changing how you book.
         </p>
