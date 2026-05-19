@@ -90,3 +90,122 @@ export const updateAdminDetails = async (route: string, payload:any) =>{
   const axiosInstance = await getAxiosInstance()
   return axiosInstance.patch(route, payload);
 }
+
+export const getUserProfileService = async () => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.get("/api/user/profile", {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const updateUserProfileService = async (payload: { fullName: string }) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.patch("/api/user/profile", payload, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const deleteUserProfileService = async () => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.delete("/api/user/delete-profile", {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const changeUserPasswordService = async (payload: { oldPassword: string; newPassword: string }) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.post("/api/user/change-password", payload, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const userLogoutService = async (payload: { fcmToken?: string; deviceType: "ANDROID" | "IOS" | "WEB" }) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.post("/api/user/logout", payload, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getUserSettingsContentService = async (type: "privacyPolicy" | "termsAndCondition") => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.get(`/api/user/settings?type=${type}`, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getUserMembershipsService = async () => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.get("/api/user/membership", {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const purchaseUserMembershipService = async (payload: { membershipId: string }) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.post("/api/user/purchase", payload, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getUserProductsService = async (payload: { venueId: string; search?: string }) => {
+  const axiosInstance = await getAxiosInstance();
+  const query = new URLSearchParams({
+    venueId: payload.venueId,
+    ...(payload.search ? { search: payload.search } : {}),
+  }).toString();
+  return axiosInstance.get(`/api/user/products?${query}`, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getUserProductByIdService = async (payload: { productId: string; venueId: string }) => {
+  const axiosInstance = await getAxiosInstance();
+  const query = new URLSearchParams(payload).toString();
+  return axiosInstance.get(`/api/user/productById?${query}`, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const buyUserProductService = async (payload: {
+  productId: string;
+  venueId: string;
+  productSize: string;
+  quantity: number;
+}) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.post("/api/user/buy-product", payload, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getProductReviewsService = async (productId: string) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.get(`/api/user/reviews?productId=${productId}`, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const postProductReviewService = async (payload: {
+  productId: string;
+  star: number;
+  reviewDescription: string;
+}) => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.post("/api/user/reviews", payload, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getUserTransactionsService = async (type: "product" | "booking") => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.get(`/api/user/transaction?type=${type}`, {
+    headers: { "x-user-type": "User" },
+  });
+};
+
+export const getUserVenuesService = async () => {
+  const axiosInstance = await getAxiosInstance();
+  return axiosInstance.get("/api/user/venues", {
+    headers: { "x-user-type": "User" },
+  });
+};

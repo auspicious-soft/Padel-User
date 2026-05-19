@@ -1,34 +1,91 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 import RouteHeader from "@/app/components/RouteHeader";
 import WebsiteFooter from "@/app/components/WebsiteFooter";
-import { products } from "@/app/merchandise/data";
+import { getUserProductsService, getUserVenuesService } from "@/services/admin-services";
+import { toast } from "sonner";
+
+type Product = {
+  _id: string;
+  name: string;
+  price: number;
+  discountedPrice: number;
+  images: string[];
+  productDescription: string;
+  inStock: boolean;
+  totalQuantity: number;
+};
+
+type Venue = {
+  _id: string;
+  name: string;
+};
 
 export default function MerchandisePage() {
   const [search, setSearch] = useState("");
-  const [selectedVenue, setSelectedVenue] = useState("All Venues");
-  const venueOptions = ["All Venues", "Sky Padel", "Downtown Court", "Green Arena"];
+  const [products, setProducts] = useState<Product[]>([]);
+  const [venues, setVenues] = useState<Venue[]>([]);
+  const [selectedVenueId, setSelectedVenueId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [loadingVenues, setLoadingVenues] = useState(false);
 
-  const productsWithVenue = useMemo(
-    () =>
-      products.map((product, idx) => ({
-        ...product,
-        venue: venueOptions[(idx % (venueOptions.length - 1)) + 1],
-      })),
-    []
-  );
+  const loadProducts = async (searchValue: string, venueId: string, isSearch = false) => {
+    if (!venueId) return;
+    if (isSearch) setLoadingSearch(true);
+    else setLoading(true);
 
-  const filteredProducts = useMemo(() => {
-    const term = search.trim().toLowerCase();
-    return productsWithVenue.filter((product) => {
-      const matchesSearch = !term || product.name.toLowerCase().includes(term);
-      const matchesVenue = selectedVenue === "All Venues" || product.venue === selectedVenue;
-      return matchesSearch && matchesVenue;
-    });
-  }, [productsWithVenue, search, selectedVenue]);
+    try {
+      const res = await getUserProductsService({
+        venueId,
+        search: searchValue.trim() || undefined,
+      });
+      setProducts((res?.data?.data ?? []) as Product[]);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? "Failed to fetch products.");
+    } finally {
+      if (isSearch) setLoadingSearch(false);
+      else setLoading(false);
+    }
+  };
+
+  const loadVenues = async () => {
+    setLoadingVenues(true);
+    try {
+      const res = await getUserVenuesService();
+      const venueList = (res?.data?.data ?? []) as Venue[];
+      setVenues(venueList);
+      if (venueList.length > 0) {
+        setSelectedVenueId(venueList[0]._id);
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? "Failed to fetch venues.");
+    } finally {
+      setLoadingVenues(false);
+    }
+  };
+
+  useEffect(() => {
+    loadVenues();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedVenueId) return;
+    loadProducts(search, selectedVenueId);
+  }, [selectedVenueId]);
+
+  useEffect(() => {
+    if (!selectedVenueId) return;
+    const timeoutId = setTimeout(() => {
+      loadProducts(search, selectedVenueId, true);
+    }, 450);
+    return () => clearTimeout(timeoutId);
+  }, [search, selectedVenueId]);
+
+  const hasProducts = useMemo(() => products.length > 0, [products]);
 
   return (
     <main className="min-h-screen bg-[#dfe4f2] text-[#2e3550]">
@@ -44,56 +101,61 @@ export default function MerchandisePage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
-                className="h-9 w-full rounded-full border border-[#d1d8ee] bg-white px-4 text-sm outline-none sm:w-[180px]"
+                className="h-9 w-full rounded-full border border-[#d1d8ee] bg-white px-4 text-sm outline-none sm:w-[220px]"
               />
               <select
-                value={selectedVenue}
-                onChange={(e) => setSelectedVenue(e.target.value)}
-                className="h-9 w-full rounded-full border border-[#d1d8ee] bg-white px-4 text-sm text-[#4f5877] outline-none sm:w-[170px]"
+                value={selectedVenueId}
+                onChange={(e) => setSelectedVenueId(e.target.value)}
+                disabled={loadingVenues || venues.length === 0}
+                className="h-9 w-full rounded-full border border-[#d1d8ee] bg-white px-4 text-sm text-[#4f5877] outline-none sm:w-[220px] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {venueOptions.map((venue) => (
-                  <option key={venue} value={venue}>
-                    {venue}
+                {venues.length === 0 && <option value="">No venues found</option>}
+                {venues.map((venue) => (
+                  <option key={venue._id} value={venue._id}>
+                    {venue.name}
                   </option>
                 ))}
               </select>
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredProducts.map((product) => (
-              <article key={product.id} className="rounded-[10px] bg-[#f7f9ff] p-[10px] shadow-sm">
-                <Link href={`/merchandise/${product.id}`} className="block w-full text-left">
-                  <Image src={product.image} alt={product.name} width={320} height={180} className="h-[220px] w-full rounded-lg object-cover" />
-                  <h3 className="mt-2 text-[18px] leading-6 font-normal text-[#6f7ef7]">{product.name}</h3>
-                  <p className="mt-1 text-[10px] leading-4 text-[#7b85a7]">
-                    This printed cotton tee is perfect for tennis enthusiasts. Comfortable and stylish, it&apos;s a great addition to your sportswear collection.
-                  </p>
-                </Link>
-                <div className="mt-2 flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <span className="text-[12px] text-[#7f86a3] line-through">$65.00</span>
-                    <span className="text-[16px] font-medium text-[#1b223f]">${product.price.toFixed(2)}</span>
-                  </div>
-                  <Link href={`/merchandise/${product.id}`} className="rounded-full bg-[#848EFF] px-5 py-2 text-[10px] font-semibold text-white">
-                    Buy Now
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {filteredProducts.length === 0 && (
-            <p className="mt-6 text-center text-sm text-[#6f7695]">No products found for this search and venue.</p>
+          {(loading || loadingSearch) && (
+            <div className="mb-4 flex items-center gap-2 text-sm text-[#6f7695]">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Loading products...
+            </div>
           )}
 
-          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-[#8b93b2]">
-            <button className="rounded bg-white px-2 py-1 shadow-sm">Prev</button>
-            <button className="rounded bg-[#848EFF] px-2 py-1 text-white">1</button>
-            <button className="rounded bg-white px-2 py-1 shadow-sm">2</button>
-            <button className="rounded bg-white px-2 py-1 shadow-sm">3</button>
-            <button className="rounded bg-white px-2 py-1 shadow-sm">Next</button>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((product) => {
+              const primaryImage = product.images?.[0] || "/assets/Rectangle.png";
+              return (
+                <article key={product._id} className="rounded-[10px] bg-[#f7f9ff] p-[10px] shadow-sm">
+                  <Link href={`/merchandise/${product._id}`} className="block w-full text-left">
+                    <img src={primaryImage} alt={product.name} className="h-[220px] w-full rounded-lg object-cover" />
+                    <h3 className="mt-2 text-[18px] leading-6 font-normal text-[#6f7ef7]">{product.name}</h3>
+                    <p className="mt-1 line-clamp-3 text-[10px] leading-4 text-[#7b85a7]">{product.productDescription || "-"}</p>
+                  </Link>
+                  <div className="mt-2 flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <span className="text-[12px] text-[#7f86a3] line-through">${Number(product.price || 0).toFixed(2)}</span>
+                      <span className="text-[16px] font-medium text-[#1b223f]">${Number(product.discountedPrice || product.price || 0).toFixed(2)}</span>
+                    </div>
+                    <Link href={`/merchandise/${product._id}`} className="rounded-full bg-[#848EFF] px-5 py-2 text-[10px] font-semibold text-white">
+                      Buy Now
+                    </Link>
+                  </div>
+                  <p className={`mt-2 text-xs ${product.inStock ? "text-[#2f9760]" : "text-[#d64567]"}`}>
+                    {product.inStock ? `In stock (${product.totalQuantity})` : "Out of stock"}
+                  </p>
+                </article>
+              );
+            })}
           </div>
+
+          {!loading && !loadingSearch && !hasProducts && (
+            <p className="mt-6 text-center text-sm text-[#6f7695]">No products found.</p>
+          )}
         </section>
       </div>
 

@@ -17,7 +17,7 @@ const merchLinks = [
 const termLinks = [
   { label: "Terms & Conditions", href: "/terms/terms-and-conditions" },
   { label: "Privacy Policy", href: "/terms/privacy-policy" },
-  { label: "Refund Policy", href: "/terms/refund-policy" },
+  // { label: "Refund Policy", href: "/terms/refund-policy" },
 ];
 
 export default function WebsiteFooter() {

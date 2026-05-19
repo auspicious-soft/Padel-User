@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { userLogoutService } from "@/services/admin-services";
 
 type RouteHeaderProps = {
   activeItem?: string;
@@ -60,9 +61,21 @@ export default function RouteHeader({
     };
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (typeof window !== "undefined") {
-      localStorage.clear();
+      try {
+        const fcmToken = localStorage.getItem("fcmToken") ?? undefined;
+        const rawUserDetails = localStorage.getItem("userDetails");
+        const parsedUser = rawUserDetails ? (JSON.parse(rawUserDetails) as { deviceType?: "ANDROID" | "IOS" | "WEB" }) : null;
+        await userLogoutService({
+          fcmToken,
+          deviceType: parsedUser?.deviceType ?? "WEB",
+        });
+      } catch (error) {
+        console.error("Logout API failed:", error);
+      } finally {
+        localStorage.clear();
+      }
     }
     setShowUserMenu(false);
     setMobileMenu(false);
@@ -135,6 +148,13 @@ export default function RouteHeader({
                 </button>
                 {showUserMenu && (
                   <div className="absolute right-0 top-[52px] w-[130px] rounded-xl border border-[#e7ebfb] bg-white p-1 shadow-lg">
+                    <button
+                      type="button"
+                      onClick={() => router.push("/profile")}
+                      className="cursor-pointer w-full rounded-lg px-3 py-2 text-left text-sm text-[#4A5C7A] hover:bg-[#f5f7ff]"
+                    >
+                      Profile
+                    </button>
                     <button
                       type="button"
                       onClick={handleLogoutClick}

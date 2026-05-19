@@ -247,3 +247,22 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
 	-moz-appearance: textfield;
 }
+
+/* Global clickable cursor for interactive elements */
+:where(
+	a[href],
+	button,
+	label[for],
+	select,
+	summary,
+	[role="button"],
+	[role="link"],
+	[onclick],
+	[data-clickable="true"]
+) {
+	cursor: pointer;
+}
+
+:where(button:disabled, input:disabled, select:disabled, textarea:disabled, [aria-disabled="true"]) {
+	cursor: not-allowed;
+}
