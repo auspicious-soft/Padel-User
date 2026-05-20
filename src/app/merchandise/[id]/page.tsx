@@ -111,9 +111,12 @@ export default function MerchandiseDetailPage() {
   if (loading) {
     return (
       <main className="min-h-screen bg-[#dfe4f2] text-[#2e3550]">
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
+          <RouteHeader activeItem="Merchandise" />
+          
           <Loader2 className="h-8 w-8 animate-spin text-[#596086]" />
         </div>
+          <WebsiteFooter />
       </main>
     );
   }

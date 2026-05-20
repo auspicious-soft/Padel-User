@@ -14,6 +14,7 @@ import {
   updateUserProfileService,
 } from "@/services/admin-services";
 import { toast } from "sonner";
+import { EditIcon } from "@/utils/svgicons";
 
 type ProfileData = {
   _id: string;
@@ -280,30 +281,30 @@ export default function ProfilePage() {
   };
 
 
- if (pageLoading && !data) {
-  return (
-    <main className="min-h-screen bg-[#d7dbe6] text-[#2f3552]">
-      <div className="px-3 pt-3">
-        <RouteHeader activeItem="Membership Pass" />
+  if (pageLoading && !data) {
+    return (
+      <main className="min-h-screen bg-[#d7dbe6] text-[#2f3552]">
+        <div className="px-3 pt-3">
+          <RouteHeader activeItem="Membership Pass" />
 
-        <div className="flex min-h-[70vh] items-center justify-center">
-          <Loader2 className="h-10 w-10 animate-spin text-[#596086]" />
+          <div className="flex min-h-[70vh] items-center justify-center">
+            <Loader2 className="h-10 w-10 animate-spin text-[#596086]" />
+          </div>
         </div>
-      </div>
 
-      <WebsiteFooter />
-    </main>
-  );
-}
+        <WebsiteFooter />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#d7dbe6] text-[#2f3552]">
       <div className="px-3 pt-3">
         <RouteHeader activeItem="" />
 
-        <section className="mx-auto mt-5 w-full max-w-[1240px] pb-12">
-          <div className="grid gap-5 md:grid-cols-[200px_1fr]">
-            <div className="mx-auto h-[190px] w-[190px] overflow-hidden rounded-full border-[6px] border-white shadow-md">
+        <section className="mx-auto mt-10 w-full max-w-[1200px] pb-12 items-center">
+          <div className="grid gap-5 md:grid-cols-[0.5fr_1fr]  items-center">
+            <div className="mx-auto h-[200px] w-[200px] md:h-[320px] md:w-[320px] overflow-hidden p-1 bg-white rounded-[999px] border-[6px] border-white shadow-md">
               <Image
                 src={
                   data?.image
@@ -320,11 +321,11 @@ export default function ProfilePage() {
             <div>
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <h1 className="text-4xl font-normal text-[#7b84f7]">
+                  <h1 className="text-4xl font-normal text-[#7b84f7] rasputin">
                     {data?.fullName ?? "-"}
                   </h1>
 
-                  <p className="mt-2 inline-block rounded-full bg-[#eef0ff] px-3 py-1 text-xs text-[#8f96be]">
+                  <p className="px-7 py-2 bg-white rounded-3xl  mt-2 inline-block text-[#848EFF] text-sm font-semibold ">
                     {data?.membershipBought
                       ? "Member"
                       : "Not a Member"}
@@ -334,58 +335,65 @@ export default function ProfilePage() {
                 <button
                   type="button"
                   onClick={() => setShowEditModal(true)}
-                  className="rounded-full bg-[#8b93fb] px-4 py-2 text-xs text-white"
+                  className="flex gap-1 rounded-full bg-[#8b93fb] px-4 py-2 text-xs text-white items-center"
                 >
+                  <EditIcon />
                   Edit Profile
                 </button>
               </div>
 
-              <div className="mt-5 grid gap-3 text-xs text-[#6d7394] sm:grid-cols-3">
+              <div className="mt-5 grid gap-5 text-xs text-[#6d7394] sm:grid-cols-3">
                 <p>
-                  <span className="text-[#949bbb]">
+                  <span className="text-[#7E7E8A] text-sm font-normal leading-6">
                     Email Address
                   </span>
                   <br />
-                  {data?.email ?? "-"}
+                  <span className="text-[#1C2329] text-sm font-medium mt-2">
+                    {data?.email ?? "-"}
+                  </span>
                 </p>
 
                 <p>
-                  <span className="text-[#949bbb]">
+                  <span className="text-[#7E7E8A] text-sm font-normal leading-6 ">
                     Last Match
                   </span>
                   <br />
-                  27 Dec 2025
+                  <span className="text-[#1C2329] text-sm font-medium mt-2">
+                    27 Dec 2025
+                  </span>
                 </p>
 
                 <p>
-                  <span className="text-[#949bbb]">
+                  <span className="text-[#7E7E8A] text-sm font-normal leading-6">
                     Device
                   </span>
                   <br />
-                  {data?.deviceType ?? "-"}
+                  <span className="text-[#1C2329] text-sm font-medium mt-2">
+                    {data?.deviceType ?? "-"}
+                  </span>
                 </p>
               </div>
 
-              <div className="mt-4 grid gap-2 rounded-xl bg-[#7f88fb] p-3 text-white sm:grid-cols-3">
+              <div className="mt-4 grid gap-2 rounded-xl bg-[#848EFF] p-5 text-white sm:grid-cols-3">
                 <div>
-                  <p className="text-[10px] text-[#dbe0ff]">
+                  <p className=" text-[#FFFFFF] text-xs font-medium">
                     Total Matches
                   </p>
-                  <p className="text-base">240</p>
+                  <p className="text-base font-normal">240</p>
                 </div>
 
                 <div>
-                  <p className="text-[10px] text-[#dbe0ff]">
+                  <p className="text-[#FFFFFF] text-xs font-medium">
                     Last Bookings
                   </p>
-                  <p className="text-base">120</p>
+                  <p className="text-base font-normal">120</p>
                 </div>
 
                 <div>
-                  <p className="text-[10px] text-[#dbe0ff]">
+                  <p className="text-[#FFFFFF] text-xs font-medium">
                     Fav Bookings
                   </p>
-                  <p className="text-base">120</p>
+                  <p className="text-base font-normal">120</p>
                 </div>
               </div>
 
@@ -420,9 +428,10 @@ export default function ProfilePage() {
             </div>
           </div>
 
+
           <div className="mt-14">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-4xl font-normal text-[#7b84f7]">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-2xl md:text-4xl font-normal text-[#848EFF] rasputin">
                 Recent Transactions
               </h2>
 
@@ -434,88 +443,185 @@ export default function ProfilePage() {
               </button>
             </div>
 
-            <div className="overflow-hidden rounded-md bg-[#10131e]">
-              <table className="w-full min-w-[760px] text-left">
-                <thead className="bg-[#7f88fb] text-[11px] text-white">
-                  <tr>
-                    <th className="px-4 py-2">Sr No.</th>
-                    <th className="px-4 py-2">Date</th>
-                    <th className="px-4 py-2">
-                      Name/Description
-                    </th>
-                    <th className="px-4 py-2">Amount</th>
-                    <th className="px-4 py-2">Status</th>
-                  </tr>
-                </thead>
-
-                {/* =========================
-                    CHANGE 4:
-                    Transaction table loading state
-                    Empty state handled inside table
-                ========================= */}
-                <tbody className="text-xs text-[#d8def7]">
-                  {transactionsLoading ? (
+            {/* ================= DESKTOP/TABLET TABLE ================= */}
+            <div className="hidden md:block overflow-hidden rounded-xl border border-white/10 bg-[#10131e]">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[760px] text-left">
+                  <thead className="bg-[#7f88fb] text-white">
                     <tr>
-                      <td
-                        colSpan={5}
-                        className="px-4 py-10 text-center"
-                      >
-                        <div className="flex items-center justify-center">
-                          <Loader2 className="h-6 w-6 animate-spin text-[#d8def7]" />
-                        </div>
-                      </td>
-                    </tr>
-                  ) : transactions.length > 0 ? (
-                    transactions.map((row, index) => (
-                      <tr
-                        key={`${row._id}-${index}`}
-                        className={
-                          index % 2 === 0
-                            ? "bg-[#121624]"
-                            : "bg-[#0d101a]"
-                        }
-                      >
-                        {/* CHANGE 5:
-                            Better serial number */}
-                        <td className="px-4 py-2">
-                          {index + 1}
-                        </td>
+                      <th className="px-4 py-3 text-sm font-medium">
+                        Sr No.
+                      </th>
 
-                        <td className="px-4 py-2">
+                      <th className="px-4 py-3 text-sm font-medium">
+                        Date
+                      </th>
+
+                      <th className="px-4 py-3 text-sm font-medium">
+                        Name/Description
+                      </th>
+
+                      <th className="px-4 py-3 text-sm font-medium">
+                        Amount
+                      </th>
+
+                      <th className="px-4 py-3 text-sm font-medium">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="text-sm text-[#d8def7]">
+                    {transactionsLoading ? (
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className="px-4 py-10 text-center"
+                        >
+                          <div className="flex items-center justify-center">
+                            <Loader2 className="h-6 w-6 animate-spin text-[#d8def7]" />
+                          </div>
+                        </td>
+                      </tr>
+                    ) : transactions.length > 0 ? (
+                      transactions.map((row, index) => (
+                        <tr
+                          key={`${row._id}-${index}`}
+                          className={`border-b border-neutral-700/20 ${index % 2 === 0
+                              ? "bg-[#19191D]"
+                              : "bg-[#14141A]"
+                            }`}
+                        >
+                          <td className="px-4 py-4">
+                            {index + 1}
+                          </td>
+
+                          <td className="px-4 py-4">
+                            {new Date(
+                              row.createdAt
+                            ).toLocaleDateString()}
+                          </td>
+
+                          <td className="px-4 py-4">
+                            {row.productId?.name ?? "Product"}
+                          </td>
+
+                          <td className="px-4 py-4">
+                            $
+                            {Number(
+                              row.totalPrice || 0
+                            ).toFixed(2)}
+                          </td>
+
+                          <td className="px-4 py-4">
+                            <span
+                              className={`rounded-full px-3 py-1 text-xs font-medium capitalize ${row.status === "completed"
+                                  ? "bg-green-500/20 text-green-300"
+                                  : row.status === "pending"
+                                    ? "bg-yellow-500/20 text-yellow-300"
+                                    : "bg-red-500/20 text-red-300"
+                                }`}
+                            >
+                              {row.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className="px-4 py-8 text-center text-[#6f7696]"
+                        >
+                          No product transactions found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* ================= MOBILE VIEW ================= */}
+            <div className="space-y-4 md:hidden">
+              {transactionsLoading ? (
+                <div className="flex items-center justify-center py-10">
+                  <Loader2 className="h-6 w-6 animate-spin text-[#596086]" />
+                </div>
+              ) : transactions.length > 0 ? (
+                transactions.map((row, index) => (
+                  <div
+                    key={`${row._id}-${index}`}
+                    className="rounded-2xl bg-[#10131e] p-4 text-white shadow-md"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs text-[#8f96b2]">
+                          Transaction
+                        </p>
+
+                        <h3 className="mt-1 text-sm font-medium break-words">
+                          {row.productId?.name ?? "Product"}
+                        </h3>
+                      </div>
+
+                      <span
+                        className={`rounded-full px-3 py-1 text-[10px] font-medium capitalize whitespace-nowrap ${row.status === "completed"
+                            ? "bg-green-500/20 text-green-300"
+                            : row.status === "pending"
+                              ? "bg-yellow-500/20 text-yellow-300"
+                              : "bg-red-500/20 text-red-300"
+                          }`}
+                      >
+                        {row.status}
+                      </span>
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-[#8f96b2]">Date</p>
+
+                        <p className="mt-1 text-white">
                           {new Date(
                             row.createdAt
                           ).toLocaleDateString()}
-                        </td>
+                        </p>
+                      </div>
 
-                        <td className="px-4 py-2">
-                          {row.productId?.name ??
-                            "Product"}
-                        </td>
+                      <div>
+                        <p className="text-[#8f96b2]">Amount</p>
 
-                        <td className="px-4 py-2">
+                        <p className="mt-1 text-white">
                           $
                           {Number(
                             row.totalPrice || 0
                           ).toFixed(2)}
-                        </td>
+                        </p>
+                      </div>
 
-                        <td className="px-4 py-2">
+                      <div>
+                        <p className="text-[#8f96b2]">Sr No.</p>
+
+                        <p className="mt-1 text-white">
+                          {index + 1}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-[#8f96b2]">Status</p>
+
+                        <p className="mt-1 capitalize text-white">
                           {row.status}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan={5}
-                        className="px-4 py-8 text-center text-[#6f7696]"
-                      >
-                        No product transactions found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-2xl bg-[#10131e] py-8 text-center text-sm text-[#6f7696]">
+                  No product transactions found.
+                </div>
+              )}
             </div>
           </div>
         </section>

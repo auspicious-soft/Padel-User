@@ -4,6 +4,10 @@ import Image from "next/image";
 import WebsiteFooter from "@/app/components/WebsiteFooter";
 import RouteHeader from "@/app/components/RouteHeader";
 import { PurpleRacketIcon, HomeNavButtonIcon, HomelistIcon, DropDownIcon } from "@/utils/svgicons";
+import { useEffect, useMemo, useState } from "react";
+import { getUserMembershipsService, purchaseUserMembershipService } from "@/services/admin-services";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const howItWorks = [
   ["Slots are scheduled", "Game slots are created for specific times with a fixed number of spots."],
@@ -30,9 +34,72 @@ const whyChooseUs = [
 ];
 
 export default function HomePage() {
+  const [memberships, setMemberships] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [purchasing, setPurchasing] = useState(false);
+
+  const currentMembership = memberships[0] ?? null;
+  const membershipImage = currentMembership?.image || "/assets/Rectangle.png";
+  const isExternalMembershipImage = membershipImage.startsWith("http");
+
+  const featureRows = useMemo(() => {
+    return (currentMembership?.features ?? []).map((feature) => {
+      const label = feature.key
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (m) => m.toUpperCase())
+        .trim();
+      const withPass =
+        typeof feature.value === "boolean"
+          ? feature.value
+            ? "Yes"
+            : "No"
+          : String(feature.value);
+
+      return {
+        feature: label,
+        withoutPass: "No",
+        withPass,
+      };
+    });
+  }, [currentMembership]);
+
+  const loadMemberships = async () => {
+    setLoading(true);
+    try {
+      const res = await getUserMembershipsService();
+      const list = (res?.data?.data ?? []) as any[];
+      setMemberships(list);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? "Failed to fetch memberships.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePurchaseMembership = async () => {
+    if (!currentMembership?._id) {
+      toast.error("No membership available to purchase.");
+      return;
+    }
+
+    setPurchasing(true);
+    try {
+      const res = await purchaseUserMembershipService({ membershipId: currentMembership._id });
+      toast.success(res?.data?.message ?? "Membership purchased successfully.");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? "Failed to purchase membership.");
+    } finally {
+      setPurchasing(false);
+    }
+  };
+
+  useEffect(() => {
+    loadMemberships();
+  }, []);
+
   return (
     <main className="bg-[#f0eef7] text-[#1f304c]">
-    {/* <main className="bg-[#f0eef7] bg-[url('/assets/ChatGPT.png')] bg-cover bg-center text-[#1f304c]"> */}
+      {/* <main className="bg-[#f0eef7] bg-[url('/assets/ChatGPT.png')] bg-cover bg-center text-[#1f304c]"> */}
       <section className="relative isolate overflow-hidden text-white">
         <Image
           src="/assets/ChatGPT.png"
@@ -62,7 +129,12 @@ export default function HomePage() {
                 <button className="px-7 py-3.5 bg-Primary rounded-3xl outline outline-1 outline-offset-[-1px] outline-White  bg-[#7f8cf8] text-white text-base font-semibold  cursor-pointer">
                   Book A Slot
                 </button>
-                <button className="cursor-pointer bg-white   text-[#848EFF] font-semibold  text-base px-7 py-3.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#848EFF]">
+                <button
+                  type="button"
+                  disabled={purchasing || loading || !currentMembership}
+                  onClick={handlePurchaseMembership}
+                  className="flex items-center gap-2 cursor-pointer bg-white   text-[#848EFF] font-semibold  text-base px-7 py-3.5 bg-White rounded-3xl outline outline-1 outline-offset-[-1px] outline-[#848EFF]disabled:cursor-not-allowed disabled:opacity-70">
+                  {purchasing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                   Get Membership Pass
                 </button>
               </div>
@@ -103,7 +175,7 @@ export default function HomePage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {howItWorks.map(([title, description]) => (
               <article key={title} className="w-full rounded-2xl border border-[#e4e7f8] bg-white p-5">
-                <p className="w-full mb-10 justify-end inline-flex text-[#98a6ff]"><HomelistIcon/></p>
+                <p className="w-full mb-10 justify-end inline-flex text-[#98a6ff]"><HomelistIcon /></p>
                 <h4 className="text-base font-medium text-[#848EFF]">{title}</h4>
                 <p className="mt-[10px] text-sm leading-6  font-normal text-[#7E7E8A]">{description}</p>
               </article>
@@ -114,38 +186,46 @@ export default function HomePage() {
 
       <section className="mx-auto grid max-w-[1240px] gap-6 px-4 pb-16 sm:px-6 lg:grid-cols-[1fr_1.65fr] lg:px-8">
         <div className="overflow-hidden rounded-[20px]">
-          <Image
-            src="/assets/Rectangle.png"
-            alt="Padel  players"
-            width={600}
-            height={400}
-            className="h-full w-full object-cover"
-          />
+          {isExternalMembershipImage ? (
+            <img
+              src={membershipImage}
+              alt="Membership"
+              className="h-[200px] w-full rounded-2xl object-cover md:h-full md:w-full"
+            />
+          ) : (
+            <Image
+              src={membershipImage}
+              alt="Membership"
+              width={600}
+              height={400}
+              className="h-[200px] w-full rounded-2xl object-cover md:h-full md:w-full"
+            />
+          )}
         </div>
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
 
-          <div>
+          <div className="w-full">
             <h3 className="text-4xl font-normal text-[#848EFF]  rasputin capitalize mt-4 ">Pricing & Membership Pass</h3>
-            <div className="mt-6 rounded-[20px] border border-[#8793ff] bg-white">
+            <div className="mt-6 w-full rounded-[20px] border border-[#8793ff] bg-white">
               <div className="grid grid-cols-3 border-b border-[#e9ecff] px-4 py-4 text-xs text-[#7a84a0] sm:px-7 sm:text-sm">
                 <p>Feature</p>
                 <p>Without Pass</p>
                 <p className="rounded-xl bg-[#7f8cf8] px-3 py-1 text-center text-white">Project Play Pass</p>
               </div>
-
-              {[
-                ["Join open game slots", "Yes", "Yes"],
-                ["Book as an individual", "Yes", "Yes"],
-                ["Pay per slot", "Yes", "Yes"],
-                ["Discounted slot pricing", "No", "Yes"],
-                ["Better value for frequent players", "No", "Yes"],
-              ].map(([feature, withoutPass, withPass]) => (
-                <div key={feature} className="grid grid-cols-3 border-b border-[#eef0ff] px-4 py-3 text-xs text-[#36435c] last:border-b-0 sm:px-7 sm:text-sm">
-                  <p className="font-semibold">{feature}</p>
-                  <p>{withoutPass}</p>
-                  <p>{withPass}</p>
+              {loading && (
+                <div className="flex items-center justify-center px-4 py-10 sm:px-7">
+                  <Loader2 className="h-5 w-5 animate-spin text-[#596086]" />
                 </div>
-              ))}
+              )}
+
+              {!loading &&
+                featureRows.map((row) => (
+                  <div key={row.feature} className="grid grid-cols-3 border-b border-[#eef0ff] px-4 py-3 text-xs text-[#36435c] last:border-b-0 sm:px-7 sm:text-sm">
+                    <p className="font-semibold">{row.feature}</p>
+                    <p>{row.withoutPass}</p>
+                    <p>{row.withPass}</p>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -160,7 +240,7 @@ export default function HomePage() {
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {faqItems.map(([question, answer], index) => (
             <details key={`${question}-${index}`} className="rounded-2xl bg-white px-5 py-5 text-[#66728d]">
-              <summary className="flex justify-between cursor-pointer list-none items-center text-base font-medium text-[#7381ff] sm:text-base">{question} <DropDownIcon/></summary>
+              <summary className="flex justify-between cursor-pointer list-none items-center text-base font-medium text-[#7381ff] sm:text-base">{question} <DropDownIcon /></summary>
               <p className="mt-2 font-normal text-sm leading-6 text-[#7E7E8A]">{answer}</p>
             </details>
           ))}
@@ -193,17 +273,17 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center flex-col lg:flex-row">
-        <h3 className="text-4xl font-normal text-[#848EFF] rasputin">Why Choose Us</h3>
-        <p className="mt-2 max-w-[650px] text-sm leading-6 text-[#707b94]">
-          Instead of booking full courts or spending time coordinating groups, you join open time slots as an individual. Each slot has clear pricing, a fixed number of spots, and fills gradually as players join. The same simple system works across multiple games, making it easier to play more often without changing how you book.
-        </p>
+          <h3 className="text-4xl font-normal text-[#848EFF] rasputin">Why Choose Us</h3>
+          <p className="mt-2 max-w-[650px] text-sm leading-6 text-[#707b94]">
+            Instead of booking full courts or spending time coordinating groups, you join open time slots as an individual. Each slot has clear pricing, a fixed number of spots, and fills gradually as players join. The same simple system works across multiple games, making it easier to play more often without changing how you book.
+          </p>
 
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {whyChooseUs.map(([title, description]) => (
             <article key={title} className="rounded-2xl bg-[#858FFF] p-5 text-white">
-              <span className="mb-[34px] inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#7f8cf8]"><Image src="/assets/Book.png" alt="" width={30} height={40}/></span>
+              <span className="mb-[34px] inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#7f8cf8]"><Image src="/assets/Book.png" alt="" width={30} height={40} /></span>
               <h4 className=" text-xl font-light rasputin leading-8">{title}</h4>
               <p className="mt-3 text-sm font-normal leading-6 text-[#FFFFFF]">{description}</p>
             </article>
